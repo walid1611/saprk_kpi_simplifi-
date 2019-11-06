@@ -23,8 +23,8 @@ object KpiCalcul {
      val appleDF = spark.read.format("csv").
       option("header", "true").
       option("inferSchema", "true")
-      //.load("hdfs:///demo/data/aapl-2017.csv").coalesce(1)
-      .load("/home/walid/data/aapl-2017.csv")
+      .load("hdfs:///demo/data/aapl-2017.csv").coalesce(1)
+      //.load("/home/walid/data/aapl-2017.csv")
 appleDF.show()
 
     import spark.implicits._
