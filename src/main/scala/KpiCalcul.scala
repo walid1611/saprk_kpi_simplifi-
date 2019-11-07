@@ -10,7 +10,7 @@ object KpiCalcul {
  val input = args(0)  //"hdfs:///demo/data/aapl-2017.csv"
  val output = args(1)
 
-    val spark = SparkSession.builder.master("local[*]")
+    val spark = SparkSession.builder//.master("local[*]")
                             .appName(s"OneVsRestExample")
                             .config("spark.es.nodes","127.0.0.1")
                             .config("spark.es.port","9200")
@@ -22,8 +22,7 @@ object KpiCalcul {
 
      val appleDF = spark.read.format("csv").
       option("header", "true").
-      option("inferSchema", "true")
-      .load(input).coalesce(1)
+      option("inferSchema", "true").load(input).coalesce(1)
       //.load("/home/walid/data/aapl-2017.csv")
 appleDF.show()
 
