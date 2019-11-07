@@ -7,8 +7,8 @@ object KpiCalcul {
 
 
   def main(args: Array[String]): Unit = {
-
-
+ val input = args(0)  //"hdfs:///demo/data/aapl-2017.csv"
+ val output = args(1)
 
     val spark = SparkSession.builder.master("local[*]")
                             .appName(s"OneVsRestExample")
@@ -23,7 +23,7 @@ object KpiCalcul {
      val appleDF = spark.read.format("csv").
       option("header", "true").
       option("inferSchema", "true")
-      .load("hdfs:///demo/data/aapl-2017.csv").coalesce(1)
+      .load(input).coalesce(1)
       //.load("/home/walid/data/aapl-2017.csv")
 appleDF.show()
 
