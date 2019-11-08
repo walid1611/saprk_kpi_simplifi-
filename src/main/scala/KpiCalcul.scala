@@ -8,7 +8,7 @@ object KpiCalcul {
 
   def main(args: Array[String]): Unit = {
  val input = args(0)  //"hdfs:///demo/data/aapl-2017.csv"
- val output = args(1)
+ val output = args(1) ///"hdfs:///demo/data/test/test2"
 
     val spark = SparkSession.builder//.master("local[*]")
                             .appName(s"OneVsRestExample")
@@ -22,9 +22,9 @@ object KpiCalcul {
 
      val appleDF = spark.read.format("csv").
       option("header", "true").
-      option("inferSchema", "true").load(input).coalesce(1)
+      option("inferSchema", "true").load(input)
       //.load("/home/walid/data/aapl-2017.csv")
-appleDF.show()
+
 
     import spark.implicits._
     val mrcfit_Sans_Previous_kpis = appleDF.withColumn("DATE_ACTION",trunc(col("Date"), "mm")) //je tranc la date (mois)
@@ -136,13 +136,18 @@ appleDF.show()
       .filter($"ID_STRUCTURE".like("User20"))
         .orderBy("DATE_ACTION")
 
-vf.show(50)
-    import org.elasticsearch.spark.sql._
+vf.coalesce(1)
+    .write
+    .format("csv")
+    .save(output)
 
-//vf.saveToEs("spark3/mappings")
+
+   // import org.elasticsearch.spark.sql._
+
+   //vf.saveToEs("spark3/mappings")
 
 
-//vf.show(100)
+   //vf.show(100)
 
 
 
